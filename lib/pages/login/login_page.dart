@@ -1,10 +1,11 @@
+//07610411 :) ;)
 import 'dart:html';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_food/pages/home/HomePage.dart';
 
 class LoginPage extends StatefulWidget {
+  static const routeName = '/LoginPage';
   const LoginPage({Key? key}) : super(key: key);
 
   @override
@@ -85,9 +86,9 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           for(int i=0;i<input.length;i++)
-                            Icon(Icons.circle,size: 20,color: Colors.deepOrange.shade200,),
+                            Icon(Icons.circle,size: 20,color: Colors.deepOrange.shade300,),
                           for(int i=0;i<6-input.length;i++)
-                            Icon(Icons.circle,size: 20,color: Colors.yellow.shade100,),
+                            Icon(Icons.circle,size: 20,color: Colors.transparent,),
                         ],
                       ),
                     )
@@ -143,12 +144,7 @@ class _LoginPageState extends State<LoginPage> {
       }
       if (input.length == 6) {
         if (input == '123456') {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => HomePage(),
-            ),
-          );
+          Navigator.pushReplacementNamed(context, '/home');
         }
         else {
           _showMaterialDialog();

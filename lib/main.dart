@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_food/pages/food/foodpage/Food_Page.dart';
+import 'package:flutter_food/pages/home/HomePage.dart';
 import 'package:flutter_food/pages/login/login_page.dart';
+import 'package:flutter_food/pages/profile/Profile_Page.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,27 +19,41 @@ class MyApp extends StatelessWidget {
         textTheme: const TextTheme(
           headline1: TextStyle(
             fontSize: 50.0,
-            color: Colors.white70,
+            color: Colors.black54,
             fontWeight: FontWeight.bold,
           ),
           headline2: TextStyle(
           fontSize: 16.0,
-          color: Colors.black54,
+          color: Colors.white70,
           fontWeight: FontWeight.bold,
         ),
           headline6: TextStyle(
             fontSize: 32.0,
+            color: Colors.black54,
+            fontWeight: FontWeight.bold,
+          ),headline3: TextStyle(
+            fontSize: 25.0,
             color: Colors.white70,
             fontWeight: FontWeight.bold,
           ),headline5: TextStyle(
             fontSize: 40.0,
             fontWeight: FontWeight.bold,
           ),
-          bodyText2: TextStyle(fontSize: 16.0),
+          bodyText2: TextStyle(fontSize: 15.0, color: Colors.white60),
         ),
       ),
       home: LoginPage(),
+      routes: {
+        LoginPage.routeName: (context) => const LoginPage(),
+        HomePage.routeName: (context) => const HomePage(),
+        foodpage.routeName: (context) => const foodpage(),
+        ProfilePage.routeName: (context) => const ProfilePage(),
+      },
+
     );
+  }
+  Widget _test(BuildContext context){
+    return const LoginPage();
   }
 }
 
