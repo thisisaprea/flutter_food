@@ -13,9 +13,9 @@ class _FoodListPageState extends State<FoodListPage> {
   final List<FoodItem>items = [
     FoodItem(
       id: 1,
-      name: 'ข้าวไข่เจียว',
-      price: 25,
-      image: 'kao_kai_jeaw.jpg',
+      name: 'ต๊อกบกกี',
+      price: 50,
+      image: 'tokbokki.jpg',
     ),
     FoodItem(
       id: 2,

@@ -17,10 +17,19 @@ class FoodDetails extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-              child: Image.asset('assets/images/${food.image}')),
+            child: Image.asset(
+              'assets/images/${food.image}',
+              width: 500,
+              height: 500,
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Text("ชื่อเมนู : ${food.name} \nราคา : ${food.price} บาท" ,style: TextStyle(fontSize: 25,color: Colors.black,)),
+            child: Text("ชื่อเมนู : ${food.name} \nราคา : ${food.price} บาท",
+                style: TextStyle(
+                  fontSize: 25,
+                  color: Colors.black,
+                )),
           ),
         ],
       ),
