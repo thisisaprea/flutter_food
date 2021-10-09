@@ -59,7 +59,6 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-
             ListTile(
               title: _buildDrawerItem(
                   Icon(
@@ -98,19 +97,15 @@ class _HomePageState extends State<HomePage> {
     Navigator.of(context).pop();
   }
 
-  Widget _buildSubPage() {
+
+  _buildSubPage() {
     switch (_subPageIndex) {
-      case 0: //home
+      case 0: // home page
         return foodpage();
-      case 1: //page
+      case 1:
         return ProfilePage();
       default:
-        return Center(
-          child: Text(
-            'THIS IS A HOMEPAGE',
-            style: Theme.of(context).textTheme.headline1,
-          ),
-        );
+        return SizedBox.shrink();
     }
   }
 

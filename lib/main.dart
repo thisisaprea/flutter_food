@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_food/pages/food/foodpage/Food_Page.dart';
+import 'package:flutter_food/pages/food/foodpage/foodlist_page.dart';
+import 'package:flutter_food/pages/food/foodpage/food_details.dart';
 import 'package:flutter_food/pages/home/HomePage.dart';
 import 'package:flutter_food/pages/login/login_page.dart';
 import 'package:flutter_food/pages/profile/Profile_Page.dart';
@@ -48,8 +50,10 @@ class MyApp extends StatelessWidget {
         HomePage.routeName: (context) => const HomePage(),
         foodpage.routeName: (context) => const foodpage(),
         ProfilePage.routeName: (context) => const ProfilePage(),
+        FoodListPage.routeName: (context) => const FoodListPage(),
+        FoodDetails.routeName: (context) => const FoodDetails(),
       },
-
+    initialRoute: LoginPage.routeName,
     );
   }
   Widget _test(BuildContext context){
