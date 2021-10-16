@@ -1,8 +1,7 @@
 //07610411 :) ;)
-import 'dart:html';
-import 'package:flutter/cupertino.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_food/pages/home/HomePage.dart';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   static const routeName = '/LoginPage';
@@ -74,21 +73,27 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     Text(
                       'LOGIN',
-                      style: Theme.of(context).textTheme.headline1,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .headline1,
                     ),
                     Text(
                       'Enter PIN to login',
-                      style: Theme.of(context).textTheme.headline2,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .headline2,
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          for(int i=0;i<input.length;i++)
-                            Icon(Icons.circle,size: 20,color: Colors.deepOrange.shade300,),
-                          for(int i=0;i<6-input.length;i++)
-                            Icon(Icons.circle,size: 20,color: Colors.transparent,),
+
+                          for(int i = 0; i < input.length; i++)
+                            Icon(Icons.circle, size: 20,
+                              color: Colors.deepPurple.shade500,),
                         ],
                       ),
                     )
@@ -133,29 +138,45 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-
   void _handleClickButton(int num) {
-    print('$num');
     setState(() {
       if (num == -1) {
-        if (input.length > 0) input = input.substring(0, input.length - 1);
+        if (input.length > 0) {
+          input = input.substring(0, input.length - 1);
+        }
       } else {
         input = '$input$num';
       }
       if (input.length == 6) {
-        if (input == '123456') {
-          Navigator.pushReplacementNamed(context, '/home');
-        }
-        else {
-          _showMaterialDialog();
-          input = '';
-        }
+        _checkPin(input);
       }
-      print('$input');
     });
   }
-}
+  Future<void> _checkPin(var pin) async {
+    var url = Uri.parse('https://cpsu-test-api.herokuapp.com/login');
+    var response = await http.post(url, body: {'pin': pin});
 
+    if (response.statusCode == 200) {
+      Map<String, dynamic> jsonBody = json.decode(response.body);
+      String status = jsonBody['status'];
+      String? message = jsonBody['message'];
+      bool data = jsonBody['data'];
+      print('status: $status');
+      print('message: $message');
+      print('data: $data');
+
+      //print(data);
+      if (data) {
+        Navigator.pushReplacementNamed(context, '/home');
+      } else {
+        setState(() {
+          input = '';
+        });
+        _showMaterialDialog();
+      }
+    }
+  }
+}
 class LoginButton extends StatelessWidget {
   final int number;
   final Function(int) onClick;

@@ -21,6 +21,10 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text('FOOD'),
         backgroundColor: Colors.indigo,
+        actions: [
+          IconButton(onPressed: () {}, icon: Icon(Icons.search)),
+          IconButton(onPressed: () {}, icon: Icon(Icons.refresh)),
+        ],
       ),
       drawer: Drawer(
         child: ListView(
