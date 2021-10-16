@@ -61,12 +61,12 @@ class _foodpageState extends State<foodpage> {
       print('STATUS: $status');
       print('MESSAGE: $message');
       print('data: $data');
-      var foodList = data.map((element) => FoodItem(
+      /*var foodList = data.map((element) => FoodItem(
           id: element['id'],
           name: element['name'],
           price: element['price'],
           image: element['image'])
-      ).toList();
+      ).toList();*/
     }
   }
 }
