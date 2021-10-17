@@ -1,7 +1,6 @@
 //07610411 :) ;)
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:flutter_food/services/api.dart';
 
 class LoginPage extends StatefulWidget {
   static const routeName = '/LoginPage';
@@ -12,8 +11,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  var input = '';
-
+  static const PIN_LENGTH = 6;
+  var _input = '';
+  var _isLoading = false;
 
   void _showMaterialDialog() {
     showDialog(
@@ -91,7 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
 
-                          for(int i = 0; i < input.length; i++)
+                          for(int i = 0; i < _input.length; i++)
                             Icon(Icons.circle, size: 20,
                               color: Colors.deepPurple.shade500,),
                         ],
@@ -138,45 +138,57 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-  void _handleClickButton(int num) {
-    setState(() {
-      if (num == -1) {
-        if (input.length > 0) {
-          input = input.substring(0, input.length - 1);
-        }
-      } else {
-        input = '$input$num';
-      }
-      if (input.length == 6) {
-        _checkPin(input);
-      }
-    });
-  }
-  Future<void> _checkPin(var pin) async {
-    var url = Uri.parse('https://cpsu-test-api.herokuapp.com/login');
-    var response = await http.post(url, body: {'pin': pin});
+  _handleClickButton(int num) async {
+    print('You pressed $num');
 
-    if (response.statusCode == 200) {
-      Map<String, dynamic> jsonBody = json.decode(response.body);
-      String status = jsonBody['status'];
-      String? message = jsonBody['message'];
-      bool data = jsonBody['data'];
-      print('status: $status');
-      print('message: $message');
-      print('data: $data');
+    if (num == -1) {
+      if (_input.length > 0) {
+        setState(() {
+          _input = _input.substring(0, _input.length - 1);
+        });
+      }
+    } else {
+      setState(() {
+        _input = '$_input$num';
+      });
+    }
 
-      //print(data);
-      if (data) {
+    if (_input.length == PIN_LENGTH) {
+      var isLogin = await _login(_input);
+
+      if (isLogin == null) return;
+
+      if (isLogin) {
         Navigator.pushReplacementNamed(context, '/home');
       } else {
         setState(() {
-          input = '';
+          _input = '';
         });
         _showMaterialDialog();
       }
     }
   }
+  Future<bool?> _login(String pin) async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      var isLogin = (await Api().submit('login', {'pin': pin})) as bool;
+      print('LOGIN: $isLogin');
+      return isLogin;
+    } catch (e) {
+      print(e);
+      _showMaterialDialog();
+      return null;
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 }
+
+
 class LoginButton extends StatelessWidget {
   final int number;
   final Function(int) onClick;
